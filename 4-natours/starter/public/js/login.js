@@ -1,8 +1,8 @@
 /* eslint-disable */
-// const AppErrorEdit = require('../../utility/appErrorEdit');
-// const AppError = require('../../utility/appError');
+import axios from 'axios';
+import {showAlert} from './alerts';
 
-const login = async (email, password) => {
+export const login = async (email, password) => {  
   try {
     const res = await axios({
       method: 'POST',
@@ -13,20 +13,14 @@ const login = async (email, password) => {
       },
     });
     if (res.data.status === 'success') {
-      console.log('Logged in uspješno');
+      showAlert('success', 'Logged in uspješno')
+      // alert('Logged in uspješno');
       window.setTimeout(() => {
         location.assign('/');
       }, 1500);
     }
     console.log(res);
   } catch (err) {
-    alert(err.response.data.message, 400);
+    showAlert('error', err.response.data.message);
   }
 };
-
-document.querySelector('.form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  login(email, password);
-});

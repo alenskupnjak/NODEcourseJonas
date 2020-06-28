@@ -1,21 +1,19 @@
 /* eslint-disable */
-// export const displayMap = (locations) => {
-
-const locations = JSON.parse(document.getElementById('map').dataset.locations);
-console.log(locations);
 
 
-mapboxgl.accessToken =
-  'pk.eyJ1IjoiYWxlbnMiLCJhIjoiY2tidjh2Njd6MDEwZDMwbGJzMmk0MWtrdiJ9.zAveTuz4GeXr-3-79kTKbQ';
 
-var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/alens/ckbv9j7uh19231inu9cjhe4v5',
-  scrollZoom: false
-  // center: [-118.113491, 34.111745],
-  // zoom: 10,
-  // interactive: false,
-});
+export const displayMap = (locations) => {
+  mapboxgl.accessToken =
+    'pk.eyJ1IjoiYWxlbnMiLCJhIjoiY2tidjh2Njd6MDEwZDMwbGJzMmk0MWtrdiJ9.zAveTuz4GeXr-3-79kTKbQ';
+
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/alens/ckbv9j7uh19231inu9cjhe4v5',
+    scrollZoom: false,
+    // center: [-118.113491, 34.111745],
+    // zoom: 10,
+    // interactive: false,
+  });
 
   const bounds = new mapboxgl.LngLatBounds();
 
@@ -52,4 +50,6 @@ var map = new mapboxgl.Map({
       right: 100,
     },
   });
+};
+
 // };
