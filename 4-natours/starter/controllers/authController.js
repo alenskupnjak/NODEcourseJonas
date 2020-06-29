@@ -59,7 +59,7 @@ exports.login = async (req, res, next) => {
 
     // 1) Check if email and password exists
     if (!email || !password) {
-      return next(new AppError('Upisi ispravni email i lozinku', 400));
+      return next(new AppError('Upisi ispravni email ili lozinku', 400));
     }
 
     // 2) Check if user exist && password is correctPassword
@@ -291,8 +291,6 @@ exports.resetPassword = async (req, res, next) => {
 
 exports.updatePassword = async (req, res, next) => {
   try {
-    console.log(req.user, req.body);
-
     const user = await User.findById(req.user.id).select('+password');
 
     console.log(user, req.body.passwordCurrent, user.password);

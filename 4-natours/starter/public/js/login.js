@@ -26,15 +26,19 @@ export const login = async (email, password) => {
 };
 
 export const logout = async () => {
+  console.log('logout');
   try {
     const res = await axios({
       method: 'GET',
       url: 'http://localhost:3000/api/v1/users/logout',
     });
     if(res.data.status === 'success') {
-      location.reload(true)
+      console.log('logout success');
+      // location.reload(true)
+      location.assign('/')
     }
   } catch (error) {
-    showAlert('error','Error logging out')
+    // showAlert('error','Error logging out')
+    console.log('Greska');
   }
 } 

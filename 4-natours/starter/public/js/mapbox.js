@@ -1,7 +1,5 @@
 /* eslint-disable */
 
-
-
 export const displayMap = (locations) => {
   mapboxgl.accessToken =
     'pk.eyJ1IjoiYWxlbnMiLCJhIjoiY2tidjh2Njd6MDEwZDMwbGJzMmk0MWtrdiJ9.zAveTuz4GeXr-3-79kTKbQ';
@@ -51,5 +49,3 @@ export const displayMap = (locations) => {
     },
   });
 };
-
-// };

@@ -46,6 +46,8 @@ class AppErrorEdit {
       //
       // Neispravan token
     } else if (err.message.startsWith('JsonWebTokenError')) {
+      console.log('JsonWebTokenError');
+      
       res.status(err.statusCode).json({
         status: err.status,
         message: 'Neispravan token. Please log in again',

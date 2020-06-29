@@ -82,5 +82,3 @@ exports.getAccount = async (req, res, next) => {
     return new AppError(error, 400);
   }
 };
-
-
