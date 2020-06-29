@@ -106,6 +106,14 @@ exports.login = async (req, res, next) => {
   }
 };
 
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: 'success' });
+};
+
 /////////////////////////////////////
 ///// Zastita rute
 exports.protect = async (req, res, next) => {
@@ -320,33 +328,37 @@ exports.updatePassword = async (req, res, next) => {
 
 // samo za renderirane stranice
 exports.isLoggedIn = async (req, res, next) => {
-  if (req.cookies.jwt) {
-    const decoded = jwt.verify(
-      req.cookies.jwt,
-      process.env.JWT_SECRET,
-      (err, data) => {
-        if (err) {
-          throw new Error(err);
-        } else {
-          return data;
+  try {
+    if (req.cookies.jwt) {
+      const decoded = jwt.verify(
+        req.cookies.jwt,
+        process.env.JWT_SECRET,
+        (err, data) => {
+          if (err) {
+            throw new Error(err);
+          } else {
+            return data;
+          }
         }
+      );
+
+      // 3) Check if user still exists
+      const currentUuser = await User.findById(decoded.id);
+      if (!currentUuser) {
+        return next();
       }
-    );
 
-    // 3) Check if user still exists
-    const currentUuser = await User.findById(decoded.id);
-    if (!currentUuser) {
+      // 4) Check if user changed password
+      if (currentUuser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      }
+
+      // THERE IS A LOGGED IN USER
+      res.locals.user = currentUuser;
+      // req.user = currentUuser;
       return next();
     }
-
-    // 4) Check if user changed password
-    if (currentUuser.changedPasswordAfter(decoded.iat)) {
-      return next();
-    }
-
-    // THERE IS A LOGGED IN USER
-    res.locals.user = currentUuser;
-    // req.user = currentUuser;
+  } catch (error) {
     return next();
   }
   next();
