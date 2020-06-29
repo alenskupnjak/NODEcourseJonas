@@ -12,6 +12,7 @@ console.log(mapBox);
 console.log(loginForm);
 
 
+
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
   displayMap(locations);

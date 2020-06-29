@@ -9,6 +9,9 @@
 
 # dependencies
 /node_modules
+/public/js/bundle.js
+.bundle.js
+*.bundle.js
 
 # profiling files
 chrome-profiler-events.json
@@ -16,8 +19,6 @@ speed-measure-plugin.json
 config.env
 
 # IDEs and editors
-public\js\bundle.js
-/bundle.js
 *.json
 /.idea
 .project
