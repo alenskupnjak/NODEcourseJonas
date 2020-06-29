@@ -114,6 +114,7 @@ app.use((err, req, res, next) => {
     mjesto: 'app.js, konzola za MIDDLEWARES greške',
     status: err.status,
     message: err.message,
+    greska: err,
   });
 });
 

@@ -8799,8 +8799,6 @@ var _alerts = require("./alerts");
 var mapBox = document.getElementById('map');
 var loginForm = document.querySelector('.form');
 var logOutBtn = document.querySelector('.nav__el--logout');
-console.log(mapBox);
-console.log(loginForm);
 
 if (mapBox) {
   var locations = JSON.parse(mapBox.dataset.locations);

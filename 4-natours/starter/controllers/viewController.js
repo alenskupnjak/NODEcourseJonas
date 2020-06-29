@@ -31,6 +31,11 @@ exports.getTour = async (req, res, next) => {
     });
 
     if (!tour) {
+      // return window.location.assign('/');
+      res.status(400).render('error', {
+        title: 'Nešto je prošlo u krivo',
+        msg: 'Takva tura ne postoji',
+      });
       return next(new AppError('Nema ture sa takvim imenom', 400));
     }
 
