@@ -1,8 +1,36 @@
+const multer = require('multer');
 const User = require('../models/userModul');
 const AppErrorEdit = require('../utility/appErrorEdit');
 const AppError = require('../utility/appError');
 
 const greske = new AppErrorEdit();
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/img/users');
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1];
+    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+  },
+});
+
+// const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Not an image! Please upload only images.', 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadUserPhoto = upload.single('photo');
 
 // prikaži sve USERE iz baze
 exports.getAllUsers = async (req, res, next) => {
@@ -37,7 +65,7 @@ exports.getMe = (req, res) => {
     status: 'sucess',
     data: {
       data: req.user,
-    }
+    },
   });
 };
 
@@ -50,6 +78,9 @@ exports.createUser = (req, res) => {
 
 // Opcija kada user sam zeli promjeniti 'name' ili 'email'
 exports.updateMe = async (req, res, next) => {
+  console.log(req.file);
+  console.log(req.body);
+
   try {
     // 1) Create error if user POSTs password data
     if (req.body.password || req.body.passwordConfirm) {
@@ -69,6 +100,12 @@ exports.updateMe = async (req, res, next) => {
         newObj[el] = req.body[el];
       }
     });
+
+    if (req.file) {
+      newObj.photo = req.file.filename;
+    }
+
+    console.log(newObj);
 
     // 3) Update user document
     const updatedUser = await User.findByIdAndUpdate(req.user.id, newObj, {
