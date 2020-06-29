@@ -16,6 +16,9 @@ speed-measure-plugin.json
 config.env
 
 # IDEs and editors
+public\js\bundle.js
+/bundle.js
+*.json
 /.idea
 .project
 .classpath
