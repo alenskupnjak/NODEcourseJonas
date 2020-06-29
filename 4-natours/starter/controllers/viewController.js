@@ -71,3 +71,16 @@ exports.pokus = async (req, res) => {
     return new AppError(error, 400);
   }
 };
+
+// Tour stranica
+exports.getAccount = async (req, res, next) => {
+  try {
+    res.status(200).render('account', {
+      title: 'Your account',
+    });
+  } catch (error) {
+    return new AppError(error, 400);
+  }
+};
+
+

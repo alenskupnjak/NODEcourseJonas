@@ -156,7 +156,7 @@ exports.protect = async (req, res, next) => {
 
     // ako je program došao do ovoga sva testiranja su OK, nastavlja dalje sa radom
     req.user = currentUuser;
-
+    res.locals.user = currentUuser;
     next();
   } catch (error) {
     greske.baciGresku(error, res);

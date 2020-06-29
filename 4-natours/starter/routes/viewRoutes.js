@@ -10,5 +10,6 @@ router.get('/', viewController.getOverview);
 router.get('/pokus', viewController.pokus);
 router.get('/tour/:slug', viewController.getTour);
 router.get('/login', viewController.login);
+router.get('/me', authController.protect, viewController.getAccount);
 
 module.exports = router;
