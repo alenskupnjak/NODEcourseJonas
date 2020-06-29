@@ -45,11 +45,16 @@ if (userDataForm) {
 }
 
 if (updatePasswordBtn) {  
-  updatePasswordBtn.addEventListener('submit', e=> {
+  updatePasswordBtn.addEventListener('submit', async e=> {
     e.preventDefault();
+    document.querySelector('.btn--save-password').innerHTML = 'Updating...'
+    
     const passOld = document.getElementById('password-current').value;
     const passNew = document.getElementById('password').value;
     const passNewRepaet = document.getElementById('password-confirm').value;
-    updatePassword(passOld, passNew, passNewRepaet )
+    await updatePassword(passOld, passNew, passNewRepaet )
+
+    document.querySelector('.btn--save-password').innerHTML = 'Save password'
+
   })
 }
