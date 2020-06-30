@@ -5,9 +5,6 @@ import { showAlert } from './alerts';
 // import showAlert  from './alerts';
 
 export const updateData = async (data) => {
-  console.log(data);
-  
-
   try {
     const res = await axios({
       method: 'PATCH',

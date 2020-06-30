@@ -38,18 +38,22 @@ if (userDataForm) {
     const form = new FormData();
     form.append('name', document.getElementById('name').value);
     form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
 
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
-    let photo = document.getElementById('photo').files[0];    
-    if (photo) {
-      console.log(photo.name);
-      photo = photo.name;
-      console.log(photo);
-      updateData({ name, email, photo });
-    } else {
-      updateData({ name, email });
-    }
+    const photofile = document.getElementById('photo').files[0]; 
+    console.log('userDataForm', photofile);
+      
+    // if (photofile) {
+    //   console.log(photo);
+    //   let photo = photofile.name;
+    //   console.log(photo);
+    //   updateData({ name, email, photo, photofile});
+    // } else {
+    //   updateData({ name, email });
+    // }
+    updateData(form)
   });
 }
 
