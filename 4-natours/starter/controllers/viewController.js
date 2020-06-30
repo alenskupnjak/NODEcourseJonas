@@ -8,6 +8,9 @@ exports.getOverview = async (req, res, next) => {
     // 1) Get tour data from collection
     const tours = await Tour.find();
 
+    console.log(tours);
+    
+
     // 2) Build template
     // 3) Render that template using tour data from 1)
 
@@ -23,6 +26,7 @@ exports.getOverview = async (req, res, next) => {
 //
 // Tour stranica
 exports.getTour = async (req, res, next) => {
+  
   try {
     // 1) Get the data, for the requested tour (including reviews and guides)
     const tour = await Tour.findOne({ slug: req.params.slug }).populate({
@@ -38,6 +42,7 @@ exports.getTour = async (req, res, next) => {
       });
       return next(new AppError('Nema ture sa takvim imenom', 400));
     }
+    console.log(tour);
 
     res.status(200).render('tour', {
       title: `${tour.name} tour`,
