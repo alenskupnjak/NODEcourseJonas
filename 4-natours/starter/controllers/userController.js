@@ -78,8 +78,7 @@ exports.createUser = (req, res) => {
 
 // Opcija kada user sam zeli promjeniti 'name' ili 'email'
 exports.updateMe = async (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
+  console.log('updateMe', req.body, req.file);
 
   try {
     // 1) Create error if user POSTs password data
@@ -94,7 +93,7 @@ exports.updateMe = async (req, res, next) => {
 
     // 2) Filtered out unwanted fields names that are not allowed to be updated
     const newObj = {};
-    const dozvoljenaPolja = ['name', 'email'];
+    const dozvoljenaPolja = ['name', 'email', 'photo'];
     Object.keys(req.body).forEach((el) => {
       if (dozvoljenaPolja.includes(el)) {
         newObj[el] = req.body[el];
@@ -105,7 +104,7 @@ exports.updateMe = async (req, res, next) => {
       newObj.photo = req.file.filename;
     }
 
-    console.log(newObj);
+    console.log('updateMe', newObj);
 
     // 3) Update user document
     const updatedUser = await User.findByIdAndUpdate(req.user.id, newObj, {

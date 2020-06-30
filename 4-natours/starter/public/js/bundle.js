@@ -8553,22 +8553,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 // import showAlert  from './alerts';
 var updateData = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(name, email) {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data) {
     var res;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            console.log(name, email);
+            console.log(data);
             _context.prev = 1;
             _context.next = 4;
             return (0, _axios.default)({
               method: 'PATCH',
               url: 'http://localhost:3000/api/v1/users/updateMe',
-              data: {
-                name: name,
-                email: email
-              }
+              data: data
             });
 
           case 4:
@@ -8595,7 +8592,7 @@ var updateData = /*#__PURE__*/function () {
     }, _callee, null, [[1, 8]]);
   }));
 
-  return function updateData(_x, _x2) {
+  return function updateData(_x) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -8646,7 +8643,7 @@ var updatePassword = /*#__PURE__*/function () {
     }, _callee2, null, [[1, 8]]);
   }));
 
-  return function updatePassword(_x3, _x4, _x5) {
+  return function updatePassword(_x2, _x3, _x4) {
     return _ref2.apply(this, arguments);
   };
 }();
@@ -8953,9 +8950,28 @@ if (logOutBtn) {
 if (userDataForm) {
   userDataForm.addEventListener('submit', function (e) {
     e.preventDefault();
+    var form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
     var name = document.getElementById('name').value;
     var email = document.getElementById('email').value;
-    (0, _updateSettings.updateData)(name, email);
+    var photo = document.getElementById('photo').files[0];
+
+    if (photo) {
+      console.log(photo.name);
+      photo = photo.name;
+      console.log(photo);
+      (0, _updateSettings.updateData)({
+        name: name,
+        email: email,
+        photo: photo
+      });
+    } else {
+      (0, _updateSettings.updateData)({
+        name: name,
+        email: email
+      });
+    }
   });
 }
 
