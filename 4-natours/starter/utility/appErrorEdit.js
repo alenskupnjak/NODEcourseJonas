@@ -64,7 +64,7 @@ class AppErrorEdit {
     } else {
       res.status(err.statusCode).json({
         status: err.status,
-        message: 'Nešto nije u redu....',
+        message: 'Nešto nije u redu.... Production',
       });
     }
   }

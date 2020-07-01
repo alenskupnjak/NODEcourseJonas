@@ -33,6 +33,11 @@ mongoose
   )
   .then(() => {
     console.log(process.env.OS, 'Spajanje na bazu uspješno obavljeno');
+    if (process.env.NODE_ENV === 'production') {
+      console.log(`Radim u ${process.env.NODE_ENV} modu`);
+    } else {
+      console.log(`Ja sam sada u ${process.env.NODE_ENV}-modu`);
+    }
   })
   .catch((err) => {
     console.log('Greška kod spajanja na Bazu');

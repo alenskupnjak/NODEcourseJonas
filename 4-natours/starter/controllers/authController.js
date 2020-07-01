@@ -24,10 +24,8 @@ exports.signup = async (req, res, next) => {
     //
     // slanje pozdravnog emaila
     const url = `${req.protocol}://${req.get('host')}/me`;
-    console.log('URL=', url);
-    console.log(req);
-    
 
+    // šaljemo pozdravnu poruku korisniku
     await new Email(newUser, url).sendWelcome();
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
@@ -221,13 +219,15 @@ exports.forgotPassword = async (req, res, next) => {
       'host'
     )}/api/v1/users/resetPassword/${resetToken}`;
 
-    const message = `Zaboravio si password?....${resetURL}`;
+    // const message = `Zaboravio si password?....${resetURL}`;
 
     // await sendEmail({
     //   email: user.email,
     //   subject: 'Tvoj reset token',
     //   message: message,
     // });
+
+    await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
       komentar: 'Token poslan korisniku',
@@ -241,8 +241,6 @@ exports.forgotPassword = async (req, res, next) => {
 // Reseriranje tokena
 exports.resetPassword = async (req, res, next) => {
   try {
-    console.log(req.params.token);
-
     // 1) Get user based on token
     const hashToken = crypto
       .createHash('sha256')

@@ -31,6 +31,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+
+
 // brojac posjeta sa jedne adrese
 const limiter = rateLimit({
   max: 100,
