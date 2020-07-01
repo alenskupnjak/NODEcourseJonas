@@ -48,6 +48,7 @@ if (userPasswordForm)
       'password'
     );
 
+    
     document.querySelector('.btn--save-password').textContent = 'Save password';
     document.getElementById('password-current').value = '';
     document.getElementById('password').value = '';

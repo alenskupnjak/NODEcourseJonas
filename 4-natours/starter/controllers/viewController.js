@@ -54,7 +54,7 @@ exports.getTour = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     res.status(200).render('login', {
-      title: ' Login',
+      title: 'Login',
     });
   } catch (error) {
     return new AppError(error, 400);

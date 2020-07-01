@@ -334,8 +334,11 @@ exports.updatePassword = async (req, res, next) => {
 
 // samo za renderirane stranice
 exports.isLoggedIn = async (req, res, next) => {
-  try {
-    if (req.cookies.jwt) {
+  if (req.cookies.jwt) {
+    try {
+      console.log('req.cookies.jwt=', req.cookies.jwt);
+      console.log('res.locals.user=', res.locals.user);
+
       const decoded = jwt.verify(
         req.cookies.jwt,
         process.env.JWT_SECRET,
@@ -363,9 +366,15 @@ exports.isLoggedIn = async (req, res, next) => {
       res.locals.user = currentUuser;
       // req.user = currentUuser;
       return next();
+    } catch (error) {
+      console.log('tutu');
+      return next();
     }
-  } catch (error) {
-    return next();
   }
+  res.status(400).render('error', {
+    title: 'Nešto je prošlo u krivo',
+    msg: 'Niste ulogirani',
+  });
   next();
+  // return next(new AppError('Nema ture sa takvim imenom', 400));
 };
