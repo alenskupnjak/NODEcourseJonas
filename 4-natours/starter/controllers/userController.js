@@ -31,8 +31,10 @@ const upload = multer({
   fileFilter: multerFilter,
 });
 
+// usnimavanje jedne slike
 exports.uploadUserPhoto = upload.single('photo');
 
+// smanjenje slika na kvadratni oblik
 exports.resizeUserPhoto = async (req, res, next) => {
   // console.log(req.body.photofile.name);
 
@@ -122,8 +124,6 @@ exports.updateMe = async (req, res, next) => {
     if (req.file) {
       newObj.photo = req.file.filename;
     }
-
-    console.log('updateMe', newObj);
 
     // 3) Update user document
     const updatedUser = await User.findByIdAndUpdate(req.user.id, newObj, {

@@ -1,9 +1,69 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const APIFeatures = require('../utility/apiFeatures');
 const Tour = require('../models/tourModel');
 const AppErrorEdit = require('../utility/appErrorEdit');
 const AppError = require('../utility/appError');
 
 const greske = new AppErrorEdit();
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Not an image! Please upload only images.', 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadTourImages = upload.fields([
+  { name: 'imageCover', maxCount: 1 },
+  { name: 'images', maxCount: 3 },
+]);
+
+exports.resizeTourImages = async (req, res, next) => {
+  console.log('001', req.files);
+  console.log('002', req.files.images);
+
+  if (!req.files.imageCover || !req.files.images) return next();
+
+  // 1) Cover image
+  req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
+  await sharp(req.files.imageCover[0].buffer)
+    .resize(2000, 1333)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/tours/${req.body.imageCover}`);
+
+  // 2) Images
+  req.body.images = [];
+
+  // riješavamo se Promise
+  await Promise.all(
+    req.files.images.map(async (file, i) => {
+      const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+
+      await sharp(file.buffer)
+        .resize(2000, 1333)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/tours/${filename}`);
+
+      req.body.images.push(filename);
+    })
+  );
+
+  next();
+};
+
+// upload.single('image');
+// upload.array('images', 5);
 
 //
 // Middelwear, predefinirani query za rutu:
@@ -401,12 +461,11 @@ exports.getToursWithin = async (req, res, next) => {
   }
 };
 
-
 //
 // Racunanje udaljenosti izmedu tocaka
 exports.getDistances = async (req, res, next) => {
   console.log('tutu');
-  
+
   const { latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
 
