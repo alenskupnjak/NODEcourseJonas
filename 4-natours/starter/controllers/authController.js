@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModul');
 const AppErrorEdit = require('../utility/appErrorEdit');
 const AppError = require('../utility/appError');
-const sendEmail = require('../utility/email');
+// const sendEmail = require('../utility/email');
+const Email = require('../utility/email');
 
 const greske = new AppErrorEdit();
 //
@@ -19,6 +20,15 @@ exports.signup = async (req, res, next) => {
       passwordConfirm: req.body.passwordConfirm,
       passwordChangedAt: new Date().toISOString(),
     });
+
+    //
+    // slanje pozdravnog emaila
+    const url = `${req.protocol}://${req.get('host')}/me`;
+    console.log('URL=', url);
+    console.log(req);
+    
+
+    await new Email(newUser, url).sendWelcome();
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRE,
@@ -213,11 +223,11 @@ exports.forgotPassword = async (req, res, next) => {
 
     const message = `Zaboravio si password?....${resetURL}`;
 
-    await sendEmail({
-      email: user.email,
-      subject: 'Tvoj reset token',
-      message: message,
-    });
+    // await sendEmail({
+    //   email: user.email,
+    //   subject: 'Tvoj reset token',
+    //   message: message,
+    // });
 
     res.status(200).json({
       komentar: 'Token poslan korisniku',

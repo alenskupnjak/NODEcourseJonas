@@ -16,17 +16,15 @@ const app = express();
 
 // definiramo templete engine koji cemo koristiti u aplikaciji
 app.set('view engine', 'pug');
-// kreiramo stau odakle cemo vuci template
+// kreiramo stazu odakle cemo vuci template
 app.set('views', path.join(__dirname, 'views'));
 
 // dodavanje linka za statičke stranice,bolji kod nego ovaj iznad
 app.use(express.static(path.join(__dirname, 'public')));
 
-console.log('__dirname', __dirname);
-
 // 1)MIDDLEWARES
 
-// secutity HTTP headers
+// securyity HTTP headers
 app.use(helmet());
 
 if (process.env.NODE_ENV === 'development') {
