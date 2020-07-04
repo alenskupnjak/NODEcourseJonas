@@ -8444,7 +8444,7 @@ var login = /*#__PURE__*/function () {
             _context.next = 3;
             return (0, _axios.default)({
               method: 'POST',
-              url: 'http://localhost:3000/api/v1/users/login',
+              url: 'http://localhost:3100/api/v1/users/login',
               data: {
                 email: email,
                 password: password
@@ -8469,7 +8469,7 @@ var login = /*#__PURE__*/function () {
           case 8:
             _context.prev = 8;
             _context.t0 = _context["catch"](0);
-            (0, _alerts.showAlert)('Neuspješno logiranje', _context.t0.response.data.message);
+            (0, _alerts.showAlert)('Neuspješno logiranje', _context.t0);
 
           case 11:
           case "end":
@@ -8498,7 +8498,7 @@ var logout = /*#__PURE__*/function () {
             _context2.next = 4;
             return (0, _axios.default)({
               method: 'GET',
-              url: 'http://localhost:3000/api/v1/users/logout'
+              url: 'http://localhost:3100/api/v1/users/logout'
             });
 
           case 4:
@@ -8563,7 +8563,7 @@ var updateData = /*#__PURE__*/function () {
             _context.next = 3;
             return (0, _axios.default)({
               method: 'PATCH',
-              url: 'http://localhost:3000/api/v1/users/updateMe',
+              url: 'http://localhost:3100/api/v1/users/updateMe',
               data: data
             });
 
@@ -8610,7 +8610,7 @@ var updatePassword = /*#__PURE__*/function () {
             _context2.next = 4;
             return (0, _axios.default)({
               method: 'PATCH',
-              url: 'http://localhost:3000/api/v1/users/updatePassword',
+              url: 'http://localhost:3100/api/v1/users/updatePassword',
               data: {
                 passwordCurrent: passOld,
                 password: passNew,
@@ -9029,7 +9029,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61816" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55226" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -40,6 +40,7 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
+// Body parser, bez ovoga ne mozemo slati podatke u req.body !!!!!
 app.use(express.json());
 
 // instaliran npm i cookie-parser, omogucije rad sa cookiem
