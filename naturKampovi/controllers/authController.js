@@ -366,7 +366,6 @@ exports.isLoggedIn = async (req, res, next) => {
       // req.user = currentUuser;
       return next();
     } catch (error) {
-      console.log('tutu');
       return next();
     }
   }

@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "058a6142-575f-494c-9d9a-1b8adb590765",
-		"name": "NATOUR-NODE-JONAS",
+		"name": "nodeCourseJonas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -1063,6 +1063,28 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "372531c4-69ed-432e-8d35-76ac8e881eab",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a6b4885c-1a19-4899-9306-2d0fa31617da",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}
